@@ -1,0 +1,1 @@
+/usr/bin/gcc-14 -g CMakeFiles/program.dir/main.c.o CMakeFiles/program.dir/functions.c.o -o program 

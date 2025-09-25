@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/maks-alex/FundAlg1/task2/build",
+  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task2_exe.dir/main.c.o -c /home/maks-alex/FundAlg1/task2/main.c",
+  "file": "/home/maks-alex/FundAlg1/task2/main.c",
+  "output": "CMakeFiles/task2_exe.dir/main.c.o"
+},
+{
+  "directory": "/home/maks-alex/FundAlg1/task2/build",
+  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task2_exe.dir/prime.c.o -c /home/maks-alex/FundAlg1/task2/prime.c",
+  "file": "/home/maks-alex/FundAlg1/task2/prime.c",
+  "output": "CMakeFiles/task2_exe.dir/prime.c.o"
+}
+]

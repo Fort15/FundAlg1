@@ -1,0 +1,1 @@
+/usr/bin/gcc-14 -g CMakeFiles/task2_exe.dir/main.c.o CMakeFiles/task2_exe.dir/prime.c.o -o task2_exe 

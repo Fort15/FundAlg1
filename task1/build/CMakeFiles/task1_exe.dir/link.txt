@@ -1,0 +1,1 @@
+/usr/bin/gcc-14 -g CMakeFiles/task1_exe.dir/main.c.o CMakeFiles/task1_exe.dir/functions.c.o -o task1_exe 
