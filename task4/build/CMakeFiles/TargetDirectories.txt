@@ -1,0 +1,3 @@
+/home/maks-alex/FundAlg1/task4/build/CMakeFiles/task4_exe.dir
+/home/maks-alex/FundAlg1/task4/build/CMakeFiles/edit_cache.dir
+/home/maks-alex/FundAlg1/task4/build/CMakeFiles/rebuild_cache.dir

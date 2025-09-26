@@ -1,0 +1,1 @@
+/usr/bin/gcc-14 -g CMakeFiles/task4_exe.dir/main.c.o CMakeFiles/task4_exe.dir/constants.c.o -o task4_exe  -lm 

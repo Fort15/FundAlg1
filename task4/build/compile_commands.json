@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/maks-alex/FundAlg1/task4/build",
+  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task4_exe.dir/main.c.o -c /home/maks-alex/FundAlg1/task4/main.c",
+  "file": "/home/maks-alex/FundAlg1/task4/main.c",
+  "output": "CMakeFiles/task4_exe.dir/main.c.o"
+},
+{
+  "directory": "/home/maks-alex/FundAlg1/task4/build",
+  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task4_exe.dir/constants.c.o -c /home/maks-alex/FundAlg1/task4/constants.c",
+  "file": "/home/maks-alex/FundAlg1/task4/constants.c",
+  "output": "CMakeFiles/task4_exe.dir/constants.c.o"
+}
+]
