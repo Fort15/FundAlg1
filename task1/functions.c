@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <limits.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,7 +14,7 @@ Status stroka_to_int(const char *stroka, int *chislo) {
 
     if (*endptr != '\0') return STATUS_INVALID_NUMBER;
     if (stroka == endptr) return STATUS_INVALID_NUMBER;
-    if (x > 2147483647 || x < -2147483648) return STATUS_TOO_BIG_INT;
+    if (x > INT_MAX || x < INT_MIN) return STATUS_TOO_BIG_INT;
 
     *chislo = (int)x;
     return STATUS_OK;
@@ -46,6 +47,7 @@ Status flag_h(int x) {
     for (int i = x; i <= 100; i += x) {
         printf("%d ", i);
     }
+    
     printf("\n");
     return STATUS_OK;
 }
@@ -57,7 +59,7 @@ Status flag_p(int x) {
     }
 
     int is_prime = 1;
-    for (int i = 2; i * i <= x; ++i) {
+    for (long long i = 2; i * i <= (long long)x; ++i) {
         if (x % i == 0) {
             is_prime = 0;
             break;
@@ -75,27 +77,35 @@ Status flag_s(int x) {
         return STATUS_OK;
     }
     if (x < 0) {
-        printf("Нельзя отрицательные числа\n");
-        return STATUS_NEGATIVE_IS_NOT_ALLOWED;
+        if (x == INT_MIN) {
+            return STATUS_INVALID_NUMBER;
+        }
+        x = -x;
     }
-
     char buf[32];
     char *p = buf + 31;
-    *p-- = '\0';
     int r;
+
+    *p-- = '\0';
     while (x) {
         r = x % 16;
         if (r > 9) *p-- = r - 10 + 'A';
         else *p-- = r + '0';
         x /= 16;
     }
-    printf("%s\n", p + 1);
+
+    *p++;
+    while (*p != '\0') {
+        printf("%c ", *p);
+        *p++;
+    } 
+
+    printf("\n");
     return STATUS_OK;
 }
 
 Status flag_e(int x) {
     if (x < 1 || x > 10) return STATUS_INVALID_NUMBER;
-
 
     for (int base = 1; base <= 10; ++base) {
         long long result = 1;
@@ -111,23 +121,22 @@ Status flag_e(int x) {
 
 Status flag_a(int x) {
     if (x <= 0) {
-        printf("Нельзя вычислить сумму (или просто 0)\n");
-        return STATUS_OK;
+        // printf("Нельзя вычислить сумму (или просто 0)\n");
+        // return STATUS_OK;
+        return STATUS_INVALID_NUMBER;
     }
-
-    long long result = (long long)x * (x + 1) / 2;
+    long long lx = (long long)x;
+    long long result = lx * (lx + 1) / 2;
     printf("Сумма натуральных чисел от 1 до %d = %lld\n", x, result);
     return STATUS_OK;
 }
 
 Status flag_f(int x) {
     if (x < 0) {
-        printf("Нельзя отрицательные\n");
         return STATUS_NEGATIVE_IS_NOT_ALLOWED;
     }
     if (x >= 21) {
-        printf("Слишком большой факториал\n");
-        return STATUS_INVALID_NUMBER;    // 21! > ull
+        return STATUS_TOO_BIG_INT; 
     }
     unsigned long long fact = 1;
     for (int i = 2; i <= x; ++i) {

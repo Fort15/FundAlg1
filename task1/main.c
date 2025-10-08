@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "functions.h"
 
-
 int main(int argc, char* argv[]) {
     if (argc != 3) {
         printf("Неверное число аргументов\n");
@@ -9,21 +8,19 @@ int main(int argc, char* argv[]) {
     }
 
     Status status;
-
     int x;
     status = stroka_to_int(argv[1], &x);    
     if (status != STATUS_OK) {
         printf("Неправильно введено число\n");
-        return status;
+        return 0;  
     }
 
     char flag;
     status = validate_flag(argv[2], &flag);
     if (status != STATUS_OK) {
-        printf("Нерпавильно введён флаг\n");
-        return status;
+        printf("Неправильно введён флаг\n");
+        return 0; 
     }
-
 
     status = STATUS_OK;
     switch (flag) {
@@ -36,5 +33,25 @@ int main(int argc, char* argv[]) {
         default: status = STATUS_INVALID_FLAG;
     }
 
-    return status;
+    if (status != STATUS_OK) {
+        switch (status) {
+            case STATUS_INVALID_NUMBER:
+                printf("Ошибка: недопустимое значение числа\n");
+                break;
+            case STATUS_NEGATIVE_IS_NOT_ALLOWED:
+                printf("Ошибка: отрицательные числа не допускаются для этого флага\n");
+                break;
+            case STATUS_INVALID_FLAG:
+                printf("Ошибка: неизвестный флаг\n");
+                break;
+            case STATUS_TOO_BIG_INT:
+                printf("Ошибка: число слишком велико\n");
+                break;
+            default:
+                printf("Неизвестная ошибка\n");
+                break;
+        }
+    }
+
+    return 0;
 }
