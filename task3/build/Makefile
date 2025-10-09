@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named task3_exe
+# Target rules for targets named task3
 
 # Build rule for target.
-task3_exe: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 task3_exe
-.PHONY : task3_exe
+task3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 task3
+.PHONY : task3
 
 # fast build rule for target.
-task3_exe/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/build
-.PHONY : task3_exe/fast
+task3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/build
+.PHONY : task3/fast
 
 functions.o: functions.c.o
 .PHONY : functions.o
 
 # target to build an object file
 functions.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/functions.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/functions.c.o
 .PHONY : functions.c.o
 
 functions.i: functions.c.i
@@ -142,7 +142,7 @@ functions.i: functions.c.i
 
 # target to preprocess a source file
 functions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/functions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/functions.c.i
 .PHONY : functions.c.i
 
 functions.s: functions.c.s
@@ -150,7 +150,7 @@ functions.s: functions.c.s
 
 # target to generate assembly for a file
 functions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/functions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/functions.c.s
 .PHONY : functions.c.s
 
 main.o: main.c.o
@@ -158,7 +158,7 @@ main.o: main.c.o
 
 # target to build an object file
 main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/main.c.o
 .PHONY : main.c.o
 
 main.i: main.c.i
@@ -166,7 +166,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -174,7 +174,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3_exe.dir/build.make CMakeFiles/task3_exe.dir/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/task3.dir/build.make CMakeFiles/task3.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -185,7 +185,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... task3_exe"
+	@echo "... task3"
 	@echo "... functions.o"
 	@echo "... functions.i"
 	@echo "... functions.s"

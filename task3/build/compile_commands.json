@@ -1,14 +1,14 @@
 [
 {
   "directory": "/home/maks-alex/FundAlg1/task3/build",
-  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task3_exe.dir/main.c.o -c /home/maks-alex/FundAlg1/task3/main.c",
+  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task3.dir/main.c.o -c /home/maks-alex/FundAlg1/task3/main.c",
   "file": "/home/maks-alex/FundAlg1/task3/main.c",
-  "output": "CMakeFiles/task3_exe.dir/main.c.o"
+  "output": "CMakeFiles/task3.dir/main.c.o"
 },
 {
   "directory": "/home/maks-alex/FundAlg1/task3/build",
-  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task3_exe.dir/functions.c.o -c /home/maks-alex/FundAlg1/task3/functions.c",
+  "command": "/usr/bin/gcc-14   -g -std=c99 -o CMakeFiles/task3.dir/functions.c.o -c /home/maks-alex/FundAlg1/task3/functions.c",
   "file": "/home/maks-alex/FundAlg1/task3/functions.c",
-  "output": "CMakeFiles/task3_exe.dir/functions.c.o"
+  "output": "CMakeFiles/task3.dir/functions.c.o"
 }
 ]

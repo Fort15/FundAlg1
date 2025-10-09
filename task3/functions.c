@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <limits.h>
 
 // Вспомогательные функции
 
@@ -18,7 +19,7 @@ Status stroka_to_int(const char *stroka, int *chislo) {
 
     if (*endptr != '\0') return STATUS_INVALID_NUMBER;
     if (stroka == endptr) return STATUS_INVALID_NUMBER;
-    if (x > 2147483647 || x < -2147483648) return STATUS_TOO_BIG_INT;
+    if (x > INT_MAX || x < INT_MIN) return STATUS_TOO_BIG_INT;
 
     *chislo = (int)x;
     return STATUS_OK;
@@ -31,15 +32,24 @@ void solve_uravn(double a, double b, double c, double eps) {
             else printf("Нет решений\n");
         }
         else {
-            printf("x = %.3f\n" , -c / b);
+            double x = -c / b;
+            if (fabs(x) < eps) x = 0.0;
+            printf("x = %.3f\n" , x);
         }
     }
     else {
         double D = b * b - 4 * a * c;
         if (D < 0) printf("Нет решений (комплексные)\n");
-        else if (D == 0) printf("x = %.3f\n", -b / 2 / a);
+        else if (D == 0) {
+            double x = -b / (2 * a);
+            if (fabs(x) < eps) x = 0.0;
+            printf("x = %.3f\n", x);
+        }
         else {
-            double x1 = (-b + sqrt(D)) / 2 / a, x2 = (-b - sqrt(D)) / 2 / a;
+            double x1 = (-b + sqrt(D)) / (2 * a);
+            double x2 = (-b - sqrt(D)) / (2 * a);
+            if (fabs(x1) < eps) x1 = 0.0;
+            if (fabs(x2) < eps) x2 = 0.0;
             printf("x1 = %.3f   x2 = %.3f\n", x1, x2);
         }
     }

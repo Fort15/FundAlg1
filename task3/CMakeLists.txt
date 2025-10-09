@@ -7,6 +7,6 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 
-add_executable(${CMAKE_PROJECT_NAME}_exe main.c functions.c)
+add_executable(${CMAKE_PROJECT_NAME} main.c functions.c)
 
-target_link_libraries(task3_exe m)
+target_link_libraries(task3 m)
