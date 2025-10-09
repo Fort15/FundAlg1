@@ -76,7 +76,7 @@ Status validate_flag(const char *stroka, char *flag) {
 
 Status flag_m(int argc, char *argv[]) {
     if (argc != 4) {
-        printf("Нужно 2 числа a b\n");
+        // printf("Нужно 2 числа a b\n");
         return STATUS_INVALID_ARGC;
     }
 
@@ -86,7 +86,7 @@ Status flag_m(int argc, char *argv[]) {
     if ((status = stroka_to_int(argv[3] , &b)) != STATUS_OK) return status;
 
     if (a == 0 || b == 0) {
-        printf("Должны быть ненулевые числа\n");
+        // printf("Должны быть ненулевые числа\n");
         return STATUS_INVALID_NUMBER;
     }
 
@@ -98,7 +98,7 @@ Status flag_m(int argc, char *argv[]) {
 
 Status flag_t(int argc, char *argv[]) {
     if (argc != 6) {
-        printf("Нужно 4 числа: eps a b c\n");
+        // printf("Нужно 4 числа: eps a b c\n");
         return STATUS_INVALID_ARGC;
     }
 
@@ -110,7 +110,7 @@ Status flag_t(int argc, char *argv[]) {
     if ((status = stroka_to_double(argv[5] , &c)) != STATUS_OK) return status;
 
     if (eps < 0 || a <= 0 || b <= 0 || c <= 0) {
-        printf("Все числа должны быть положительные\n");
+        // printf("Все числа должны быть положительные\n");
         return STATUS_INVALID_NUMBER;
     }
 
@@ -125,11 +125,11 @@ Status flag_t(int argc, char *argv[]) {
 
 Status flag_q(int argc, char *argv[]) {
         if (argc != 6) {
-        printf("Нужно 4 числа: eps a b c\n");
+        // printf("Нужно 4 числа: eps a b c\n");
         return STATUS_INVALID_ARGC;
     }
 
-        double eps, a, b , c;
+    double eps, a, b , c;
     Status status;
     if ((status = stroka_to_double(argv[2] , &eps)) != STATUS_OK) return status;
     if ((status = stroka_to_double(argv[3] , &a)) != STATUS_OK) return status;
@@ -137,7 +137,7 @@ Status flag_q(int argc, char *argv[]) {
     if ((status = stroka_to_double(argv[5] , &c)) != STATUS_OK) return status;
 
     if (eps < 0) {
-        printf("Эпсилон должен быть положительный\n");
+        // printf("Эпсилон должен быть положительный\n");
         return STATUS_INVALID_NUMBER;
     }
 

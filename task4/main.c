@@ -1,32 +1,56 @@
 #include <stdio.h>
 #include "constants.h"
+#include <stdlib.h>
 
 
 int main() {
+    char line[256];
+    
     printf("1.e 2.pi 3.ln2 4.sqrt(2) 5.γ\n");
+    printf("Введите число от 1 до 5: ");
+    
+    if (!fgets(line, sizeof(line), stdin)) {
+        printf("Ошибка ввода\n");
+        return 0;
+    }
     
     int x;
-    if (scanf("%d", &x) != 1 || x < 1 || x > 5) {
+    char *endptr;
+    long val = strtol(line, &endptr, 10);
+    
+    while (*endptr == ' ' || *endptr == '\t' || *endptr == '\n') {
+        endptr++;
+    }
+    
+    if (endptr == line || *endptr != '\0' || val < 1 || val > 5) {
         printf("Введите число от 1 до 5\n");
-        return STATUS_INVALID_CHOICE;
+        return 0;
+    }
+    x = (int)val;
+    
+    printf("Введите точность (eps > 0): ");
+    if (!fgets(line, sizeof(line), stdin)) {
+        printf("Ошибка ввода\n");
+        return 0;
+    }
+    
+    double eps = strtod(line, &endptr);
+    while (*endptr == ' ' || *endptr == '\t' || *endptr == '\n') {
+        endptr++;
     }
 
-    double eps;
-    printf("Введите точность (eps > 0): ");
-    if (scanf("%lf", &eps) != 1 || eps <= 0) {
-        printf("Эпсилон должен быть положительным числом\n");
-        return STATUS_INVALID_EPS;
+    if (endptr == line || *endptr != '\0') {
+        printf("Некорректный ввод\n");
+        return 0;
     }
-     
-    double result;
-    Status status = STATUS_OK;
-    if (x == 5 && eps < 0.0001 || x != 5 && eps < 0.000001) {
-        printf("Введите больший эпсилон.\n");
-        return STATUS_INVALID_EPS;
+    if (eps <= 0) {
+    printf("Эпсилон должен быть положительным числом\n");
+    return 0;
     }
     printf("\nРезультаты вычислений:\n");
     printf("---------------------\n");
-
+    Status status;
+    double result;
     switch (x) {
         case 1: // e
             status = e_lim(eps, &result);
@@ -75,13 +99,13 @@ int main() {
 
         default:
             printf("Введите число от 1 до 5\n");
-            return STATUS_INVALID_CHOICE;
+            return 0;
     }
 
     if (status != STATUS_OK) {
         printf("Ошибка %d\n", status);
-        return status;
+        return 0;
     }
 
-    return STATUS_OK;
+    return 0;
 }

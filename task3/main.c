@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("Неверное число аргументов\n");
-        return STATUS_INVALID_ARGC;
+        return 0;
     }
 
     Status status;
@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     status = validate_flag(argv[1], &flag);    
     if (status != STATUS_OK) {
         printf("Нерпавильно введён флаг\n");
-        return status;
+        return 0;
     }
 
     status = STATUS_OK;
@@ -23,6 +23,24 @@ int main(int argc, char *argv[]) {
         case 't': status = flag_t(argc, argv); break; 
         default: status = STATUS_INVALID_FLAG;
     }
-
-    return status;
+    switch (status) {
+        case STATUS_INVALID_NUMBER:
+            printf("Неправильно введено число\n");
+            break;
+        case STATUS_TOO_BIG_INT:
+            printf("Большое число\n");
+            break;
+        case STATUS_INVALID_ARGC:
+            printf("Неверное число аргументов\n");
+            break;
+        case STATUS_INVALID_FLAG:
+            printf("Неправильный флаг\n");
+            break;
+        case STATUS_OK:
+            break;
+        default:
+            printf("Неизвестная ошибка\n");
+            break;
+    }
+    return 0;
 }

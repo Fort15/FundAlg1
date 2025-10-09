@@ -3,10 +3,6 @@
 #include <stdio.h>
 
 Status e_ryad(double eps, double *e) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!e) return STATUS_INVALID_EPS;
 
     double sum = 0, slag = 1;
@@ -23,21 +19,16 @@ Status e_ryad(double eps, double *e) {
 }
 
 Status e_lim(double eps, double *e) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!e) return STATUS_INVALID_EPS;
 
-    double nprev = 0, ncur = 2;
-    int n = 1;
+    double nprev = 2.0, ncur;
+    int n = 2;
 
-    while (1) {
+    while (n <= 1000000) {
         ncur = pow(1.0 + 1.0 / n, n);
         if (fabs(ncur - nprev) < eps) break;
         nprev = ncur;
         n++;
-        if (n > 1000000) return STATUS_NO_LIM;
     }
 
     *e = ncur;
@@ -45,10 +36,6 @@ Status e_lim(double eps, double *e) {
 }
 
 Status e_newton(double eps, double *e) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!e) return STATUS_INVALID_EPS;
 
     double dx, x = 2.0;
@@ -64,10 +51,6 @@ Status e_newton(double eps, double *e) {
 }
 
 Status pi_ryad(double eps, double *pi) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!pi) return STATUS_INVALID_EPS;
 
     double sum = 0, slag = 1;
@@ -84,16 +67,12 @@ Status pi_ryad(double eps, double *pi) {
 }
 
 Status pi_lim(double eps, double *pi) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!pi) return STATUS_INVALID_EPS;
 
     double ncur, nprev = 0;
     int n = 1;
 
-    while (1) {
+    while (n <= 1000) {
         double ln_ncur = 4 * n * log(2);
         for (int i = 1; i <= n; ++i) {
             ln_ncur += 4.0 * log(i);
@@ -106,9 +85,7 @@ Status pi_lim(double eps, double *pi) {
         ncur = exp(ln_ncur);
         if (fabs(ncur - nprev) < eps) break;
         ++n;
-        nprev = ncur;
-        
-        if (n > 1000) return STATUS_NO_LIM;
+        nprev = ncur;        
     }
 
     *pi = ncur;
@@ -116,10 +93,6 @@ Status pi_lim(double eps, double *pi) {
 }
 
 Status pi_newton(double eps, double *pi) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!pi) return STATUS_INVALID_EPS;
 
     double x = 3.0, dx;
@@ -135,10 +108,6 @@ Status pi_newton(double eps, double *pi) {
 }
 
 Status ln2_ryad(double eps, double *ln2) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!ln2) return STATUS_INVALID_EPS;
 
     double sum = 0, slag = 1;
@@ -155,16 +124,12 @@ Status ln2_ryad(double eps, double *ln2) {
 }
 
 Status ln2_lim(double eps, double *ln2) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!ln2) return STATUS_INVALID_EPS;
 
     double ncur, nprev = 0;;
     int n = 1;
 
-    while (1) {
+    while (n <= 100000) {
         ncur = n * (pow(2.0, 1.0 / n) - 1);
 
         if (fabs(ncur - nprev) < eps) break;
@@ -172,7 +137,6 @@ Status ln2_lim(double eps, double *ln2) {
         ++n;
         nprev = ncur;
 
-        if (n > 100000) return STATUS_NO_LIM;
     }
 
     *ln2 = ncur;
@@ -180,10 +144,6 @@ Status ln2_lim(double eps, double *ln2) {
 }
 
 Status ln2_newton(double eps, double *ln2) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!ln2) return STATUS_INVALID_EPS;
 
     double x = 1.0, dx;
@@ -199,10 +159,6 @@ Status ln2_newton(double eps, double *ln2) {
 }
 
 Status sqrt2_ryad(double eps, double *sqrt2) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!sqrt2) return STATUS_INVALID_EPS;
 
     double proizv = 1.0, mn = pow(2.0, pow(2.0, -2.0));
@@ -223,16 +179,12 @@ Status sqrt2_ryad(double eps, double *sqrt2) {
 }
 
 Status sqrt2_lim(double eps, double *sqrt2) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!sqrt2) return STATUS_INVALID_EPS;
 
     double nprev = -0.5, ncur;
     int n = 1;
 
-    while (1) {
+    while (n <= 100000) {
         ncur = nprev - nprev * nprev / 2 + 1;
 
         if (fabs(ncur - nprev) < eps) break;
@@ -240,7 +192,6 @@ Status sqrt2_lim(double eps, double *sqrt2) {
         ++n;
         nprev = ncur;
 
-        if (n > 100000) return STATUS_NO_LIM;
     }
 
     *sqrt2 = ncur;
@@ -248,10 +199,6 @@ Status sqrt2_lim(double eps, double *sqrt2) {
 }
 
 Status sqrt2_newton(double eps, double *sqrt2) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!sqrt2) return STATUS_INVALID_EPS;
 
     double x = 1.0, dx;
@@ -267,10 +214,6 @@ Status sqrt2_newton(double eps, double *sqrt2) {
 }
 
 Status y_ryad(double eps, double *y) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!y) return STATUS_INVALID_EPS;
 
     double pi;
@@ -293,10 +236,6 @@ Status y_ryad(double eps, double *y) {
 }
 
 Status y_lim(double eps, double *y) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!y) return STATUS_INVALID_EPS;
     
     double nprev = 0, ncur, sum; 
@@ -331,16 +270,12 @@ Status y_lim(double eps, double *y) {
 }
 
 Status y_newton(double eps, double *y) {
-    if (eps <= 0) {
-        printf("Эпсилон должен быть > 0\n");
-        return STATUS_INVALID_EPS;
-    }
     if (!y) return STATUS_INVALID_EPS;
 
     int t = 2;
     double nprev = 0;
 
-    while(1) {
+    while(t <= 5000) {
         double ln_t = log(t);
         double proizv = 1.0;   
 
@@ -370,6 +305,5 @@ Status y_newton(double eps, double *y) {
         }
         nprev = a;
         ++t;
-        if (t > 5000) return STATUS_NO_LIM;
     }
 }
