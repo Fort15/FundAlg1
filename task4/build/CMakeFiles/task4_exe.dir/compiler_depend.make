@@ -43,11 +43,13 @@ CMakeFiles/task4_exe.dir/main.c.o: /home/maks-alex/FundAlg1/task4/main.c \
   /usr/include/features.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
+  /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -66,6 +68,8 @@ CMakeFiles/task4_exe.dir/main.c.o: /home/maks-alex/FundAlg1/task4/main.c \
   /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h
 
 
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
 /home/maks-alex/FundAlg1/task4/main.c:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h:
@@ -73,6 +77,8 @@ CMakeFiles/task4_exe.dir/main.c.o: /home/maks-alex/FundAlg1/task4/main.c \
 /usr/lib/gcc/x86_64-linux-gnu/14/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/stdlib.h:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 

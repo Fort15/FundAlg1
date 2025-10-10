@@ -21,12 +21,11 @@ Status e_ryad(double eps, double *e) {
 Status e_lim(double eps, double *e) {
     if (!e) return STATUS_INVALID_EPS;
 
-    double nprev = 2.0, ncur;
+    double nprev = 2.0, ncur = 0;
     int n = 2;
 
-    while (n <= 1000000) {
+    while (n <= 1000000 || fabs(ncur - nprev) >= eps) {
         ncur = pow(1.0 + 1.0 / n, n);
-        if (fabs(ncur - nprev) < eps) break;
         nprev = ncur;
         n++;
     }
@@ -35,20 +34,39 @@ Status e_lim(double eps, double *e) {
     return STATUS_OK;
 }
 
-Status e_newton(double eps, double *e) {
+Status e_binary(double eps, double *e) {
     if (!e) return STATUS_INVALID_EPS;
+    
+    double left = 2.0, right = 3.0;
 
-    double dx, x = 2.0;
-    do {
-        double f = log(x) - 1.0;
-        double df = 1.0 / x;
-        dx = -f / df;
-        x += dx;
-    } while (fabs(dx) >= eps);
+    while (right - left > eps) {
+        double mid = (left + right) / 2;
+        double f = log(mid) - 1;
 
-    *e = x;
+        if (f > 0) {
+            right = mid; 
+        } else {
+            left = mid;
+        }
+    }
+    *e = (right + left) / 2;
     return STATUS_OK;
 }
+
+// Status e_newton(double eps, double *e) {
+//     if (!e) return STATUS_INVALID_EPS;
+
+//     double dx, x = 2.0;
+//     do {
+//         double f = log(x) - 1.0;
+//         double df = 1.0 / x;
+//         dx = -f / df;
+//         x += dx;
+//     } while (fabs(dx) >= eps);
+
+//     *e = x;
+//     return STATUS_OK;
+// }
 
 Status pi_ryad(double eps, double *pi) {
     if (!pi) return STATUS_INVALID_EPS;
@@ -69,10 +87,10 @@ Status pi_ryad(double eps, double *pi) {
 Status pi_lim(double eps, double *pi) {
     if (!pi) return STATUS_INVALID_EPS;
 
-    double ncur, nprev = 0;
+    double ncur = 1, nprev = 0;
     int n = 1;
 
-    while (n <= 1000) {
+    while (n <= 5000 || fabs(ncur - nprev) >= eps) {
         double ln_ncur = 4 * n * log(2);
         for (int i = 1; i <= n; ++i) {
             ln_ncur += 4.0 * log(i);
@@ -83,7 +101,6 @@ Status pi_lim(double eps, double *pi) {
             ln_ncur -= 2.0 * log(i);
         }
         ncur = exp(ln_ncur);
-        if (fabs(ncur - nprev) < eps) break;
         ++n;
         nprev = ncur;        
     }
@@ -126,14 +143,11 @@ Status ln2_ryad(double eps, double *ln2) {
 Status ln2_lim(double eps, double *ln2) {
     if (!ln2) return STATUS_INVALID_EPS;
 
-    double ncur, nprev = 0;;
+    double ncur = 1, nprev = 0;;
     int n = 1;
 
-    while (n <= 100000) {
+    while (n <= 100000 || fabs(ncur - nprev) >= eps) {
         ncur = n * (pow(2.0, 1.0 / n) - 1);
-
-        if (fabs(ncur - nprev) < eps) break;
-
         ++n;
         nprev = ncur;
 
@@ -143,20 +157,39 @@ Status ln2_lim(double eps, double *ln2) {
     return STATUS_OK;
 }
 
-Status ln2_newton(double eps, double *ln2) {
+Status ln2_binary(double eps, double *ln2) {
     if (!ln2) return STATUS_INVALID_EPS;
 
-    double x = 1.0, dx;
-    do {
-        double f = exp(x) - 2;
-        double df = exp(x);
-        dx = -f / df;
-        x += dx;
-    } while (fabs(dx) >= eps);
+    double left = 0.0, right = 1.0;
 
-    *ln2 = x;
-    return STATUS_OK;   
+    while (right - left > eps) {
+        double mid = (right + left) / 2;
+        double f = exp(mid) - 2;
+
+        if (f > 0) {
+            right = mid;
+        } else {
+            left = mid;
+        }
+    }
+    *ln2 = (left + right) / 2;
+    return STATUS_OK;
 }
+
+// Status ln2_newton(double eps, double *ln2) {
+//     if (!ln2) return STATUS_INVALID_EPS;
+
+//     double x = 1.0, dx;
+//     do {
+//         double f = exp(x) - 2;
+//         double df = exp(x);
+//         dx = -f / df;
+//         x += dx;
+//     } while (fabs(dx) >= eps);
+
+//     *ln2 = x;
+//     return STATUS_OK;   
+// }
 
 Status sqrt2_ryad(double eps, double *sqrt2) {
     if (!sqrt2) return STATUS_INVALID_EPS;
@@ -165,13 +198,11 @@ Status sqrt2_ryad(double eps, double *sqrt2) {
     double next = proizv * mn;
     int k = 2;
 
-    while (fabs(next - proizv) > eps) {
+    while (fabs(next - proizv) > eps || k <= 1000) {
         proizv = next;
         k++;
         mn = pow(2.0, pow(2.0, -k));
         next *= mn;
-
-        if (k > 1000) return STATUS_NO_LIM;
     }
 
     *sqrt2 = proizv;
@@ -181,20 +212,36 @@ Status sqrt2_ryad(double eps, double *sqrt2) {
 Status sqrt2_lim(double eps, double *sqrt2) {
     if (!sqrt2) return STATUS_INVALID_EPS;
 
-    double nprev = -0.5, ncur;
+    double nprev = -0.5, ncur = 1;
     int n = 1;
 
-    while (n <= 100000) {
+    while (n <= 100000 || fabs(ncur - nprev) >= eps) {
         ncur = nprev - nprev * nprev / 2 + 1;
-
-        if (fabs(ncur - nprev) < eps) break;
-
         ++n;
         nprev = ncur;
 
     }
 
     *sqrt2 = ncur;
+    return STATUS_OK;
+}
+
+Status sqrt2_binary(double eps, double *sqrt2) {
+    if (!sqrt) return STATUS_INVALID_EPS;
+
+    double left = 1.0, right = 2.0;
+
+    while (right - left > eps) {
+        double mid = (left + right) / 2;
+        double f = mid * mid - 2;
+
+        if (f > 0) {
+            right = mid;
+        } else {
+            left = mid;
+        }
+    }
+    *sqrt2 = (left + right) / 2;
     return STATUS_OK;
 }
 
@@ -275,7 +322,7 @@ Status y_newton(double eps, double *y) {
     int t = 2;
     double nprev = 0;
 
-    while(t <= 5000) {
+    while(t <= 7500) {
         double ln_t = log(t);
         double proizv = 1.0;   
 

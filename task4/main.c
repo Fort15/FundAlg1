@@ -57,7 +57,8 @@ int main() {
             if (status == STATUS_OK) printf("Предел: %.10f\n", result);
             status = e_ryad(eps, &result);
             if (status == STATUS_OK) printf("Ряд:    %.10f\n", result);
-            status = e_newton(eps, &result);
+            // status = e_newton(eps, &result);
+            status = e_binary(eps, &result);
             if (status == STATUS_OK) printf("Уравнение: %.10f\n", result);
             break;
         
@@ -75,7 +76,8 @@ int main() {
             if (status == STATUS_OK) printf("Предел: %.10f\n", result);
             status = ln2_ryad(eps, &result);
             if (status == STATUS_OK) printf("Ряд:    %.10f\n", result);
-            status = ln2_newton(eps, &result);
+            // status = ln2_newton(eps, &result);
+            status = ln2_binary(eps, &result);
             if (status == STATUS_OK) printf("Уравнение: %.10f\n", result);
             break;
 
@@ -84,7 +86,8 @@ int main() {
             if (status == STATUS_OK) printf("Предел: %.10f\n", result);
             status = sqrt2_ryad(eps, &result);
             if (status == STATUS_OK) printf("Ряд:    %.10f\n", result);
-            status = sqrt2_newton(eps, &result);
+            // status = sqrt2_newton(eps, &result);
+            status = sqrt2_binary(eps, &result);
             if (status == STATUS_OK) printf("Уравнение: %.10f\n", result);
             break;
 
