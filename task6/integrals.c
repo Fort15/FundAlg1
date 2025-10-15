@@ -17,83 +17,28 @@ Status parse_eps(const char *stroka, double *eps) {
     return STATUS_OK;
 }
 
-double integrate_a(double a, double b, double eps) {
-    int n = 1;
-    double h = b - a, Sprev = 0.0;
-    double Scur = (1.0 + log(1.0 + b) / b) * 0.5 * h;
-
-    while (fabs(Scur - Sprev) >= eps) {
-        if (n > 1000000) {
-            break;
-        }
-        Sprev = Scur;
-        n *= 2;
-        h = (b - a) / n;
-        double sum = (1.0 + log(2.0) / 1.0);
-        for (int i = 1; i < n; ++i) {
-            double x = a + i * h;
-            double fx = (fabs(x - 0.0) < 1e-12) ? 1.0 : log(1.0 + x) / x;
-            sum += 2 * fx;
-        }
-        Scur = 0.5 * h * sum;
-    }
-
-    return Scur;
+double f_a(double x) {
+    return (x != 0) ? log(1.0 + x) / x : 1.0;
 }
 
-double integrate_b(double a, double b, double eps) {
-    int n = 1;
-    double h = b - a, Sprev = 0.0;
-    double Scur = (exp(-a * a / 2.0) + exp(-b * b / 2.0)) * 0.5 * h;
-
-    while (fabs(Scur - Sprev) >= eps) {
-        if (n > 1000000) {
-            break;
-        }
-        Sprev = Scur;
-        n *= 2;
-        h = (b - a) / n;
-        double sum = exp(-a * a / 2.0) + exp(-b * b / 2.0);
-        for (int i = 1; i < n; ++i) {
-            double x = a + i * h;
-            double fx = exp(-x * x / 2.0);
-            sum += 2 * fx;
-        }
-        Scur = 0.5 * h * sum;
-    }
-
-    return Scur;
+double f_b(double x) {
+    return exp(-x * x / 2.0);
 }
 
-double integrate_c(double a, double b, double eps) {
-    int n = 1;
-    double h = b - a, Sprev = 0.0;
-    int infinity = 100;
-    double Scur = (log(1.0 / (1.0 - a)) + infinity) * 0.5 * h;
-
-    while (fabs(Scur - Sprev) >= eps) {
-        if (n > 1000000) {
-            break;
-        }
-        Sprev = Scur;
-        n *= 2;
-        h = (b - a) / n;
-        double sum = log(1.0 / (1.0 - a)) + infinity;
-        for (int i = 1; i < n; ++i) {
-            double x = a + i * h;
-            double fx = log(1.0 / (1.0 - x));
-            sum += 2 * fx;
-        }
-        Scur = 0.5 * h * sum;
-    }
-
-    return Scur;
+double f_c(double x) {
+    int inf = 100;
+    return (x != 1.0) ? -log(1.0 - x) : inf;
 }
 
-double integrate_d(double a, double b, double eps) {
+double f_d(double x) {
+    return pow(x, x);
+}
+
+double integrate(double a, double b, double eps, double (*f)(double)) {
     int n = 1;
-    double h = b - a, Sprev = 0.0;
-    double Scur = (1 + pow(b, b)) * 0.5 * h;
+    double h = b - a;
+    double fa = f(a), fb = f(b);
+    double Sprev = 0.0, Scur = (fa + fb) * 0.5 * h;
 
     while (fabs(Scur - Sprev) >= eps) {
         if (n > 1000000) {
@@ -102,11 +47,10 @@ double integrate_d(double a, double b, double eps) {
         Sprev = Scur;
         n *= 2;
         h = (b - a) / n;
-        double sum = 1 + pow(b, b);
+        double sum = fa + fb;
         for (int i = 1; i < n; ++i) {
             double x = a + i * h;
-            double fx = pow(x, x);
-            sum += 2 * fx;
+            sum += 2 * f(x);
         }
         Scur = 0.5 * h * sum;
     }

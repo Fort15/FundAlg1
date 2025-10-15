@@ -15,8 +15,9 @@ int main(int argc, char *argv[]) {
     }
 
     double a = 0.0, b = 1.0;
-    printf("a. %.10f\n", integrate_a(a, b, eps));   // 0,8224670210725264
-    printf("b. %.10f\n", integrate_b(a, b, eps)); // 0.8556243918921488
-    printf("c. %.10f\n", integrate_c(a, b, eps));  // 1
-    printf("d. %.10f\n", integrate_d(a, b, eps)); // 0.7834305107121344
+    double (*f)(double);
+    printf("a. %.10f\n", integrate(a, b, eps, f_a));   // 0,8224670210725264
+    printf("b. %.10f\n", integrate(a, b, eps, f_b)); // 0.8556243918921488
+    printf("c. %.10f\n", integrate(a, b, eps, f_c));  // 1
+    printf("d. %.10f\n", integrate(a, b, eps, f_d)); // 0.7834305107121344
 }

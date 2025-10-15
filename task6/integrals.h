@@ -8,9 +8,12 @@ typedef enum {
     STATUS_INVALID_NUMBER,
 } Status;
 
+double f_a(double x);
+double f_b(double x);
+double f_c(double x);
+double f_d(double x);
+
+double integrate(double a, double b, double eps, double (*f)(double));
+
 Status parse_eps(const char *stroka, double *eps);
-double integrate_a(double a, double b, double eps);
-double integrate_b(double a, double b, double eps);
-double integrate_c(double a, double b, double eps);
-double integrate_d(double a, double b, double eps);
 #endif
