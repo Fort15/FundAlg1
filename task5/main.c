@@ -1,11 +1,14 @@
 #include "functions.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 
 int main(int argc, char* argv[]) { 
     if (argc < 3 || argc > 4) {
         printf("Неверное число аргументов\n");
-        return STATUS_INVALID_ARGC;   
+        return 0;   
     }
 
     int have_n = 0;
@@ -24,10 +27,14 @@ int main(int argc, char* argv[]) {
     if (have_n) {
         if (argc != 4) {
             printf("Неверное число аргументов\n");
-            return STATUS_INVALID_ARGC;
+            return 0;
         }
         output_path = argv[3];
     } else {
+        if (argc != 3) {
+            printf("Неверное число аргументов\n");
+            return STATUS_INVALID_ARGC;
+        }
         status = out_file_path(input_path, &temp_path);
         if (status != STATUS_OK) {
             printf("Ошибка создания выходного файла\n");
@@ -36,6 +43,15 @@ int main(int argc, char* argv[]) {
         output_path = temp_path;
     }
 
+    int output_exists = (access(output_path, F_OK) == 0);
+    if (output_exists) {
+        Status same_status = same_files(input_path, output_path);
+        if (same_status == STATUS_SAME_FILES) {
+            printf("Ошибка: входной и выходной файлы совпадают, риск затирания данных.\n");
+            if (temp_path) free(temp_path);
+            return 0;
+        }
+    }
     FILE *input_file = fopen(input_path, "r");
     if (!input_file) {
         printf("Ошибка при открытии входного файла\n");

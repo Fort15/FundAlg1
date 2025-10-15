@@ -4,6 +4,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+
+
+Status same_files(const char *file1, const char *file2) {
+    struct stat st1, st2;
+    if (stat(file1, &st1) != 0) return STATUS_OK;    
+    if (stat(file2, &st2) != 0) return STATUS_OK;    
+    
+    if ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino)) {
+        return STATUS_SAME_FILES;
+    }
+    return STATUS_OK;
+}
+
 
 Status validate_flag(const char *stroka, char *flag, int *have_n) {
     if (!stroka || !flag || !have_n) return STATUS_INVALID_FLAG;
@@ -31,7 +47,7 @@ Status validate_flag(const char *stroka, char *flag, int *have_n) {
 Status out_file_path(const char *path, char **output) {
     if (!path) return STATUS_INVALID_FILE;
 
-    const char *filename = strchr(path, '/');
+    const char *filename = strrchr(path, '/');
     if (!filename) filename = path;
     else filename++;
 

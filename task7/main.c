@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -13,6 +16,15 @@ int main(int argc, char* argv[]) {
     if (!in) {
         printf("Не удалось открыть входной файл\n");
         return 0;
+    }
+
+    int output_exists = (access(argv[2], F_OK) == 0);
+    if (output_exists) {
+        Status same_status = same_files(argv[1], argv[2]);
+        if (same_status == STATUS_SAME_FILES) {
+            printf("Ошибка: входной и выходной файлы совпадают, риск затирания данных.\n");
+            return 0;
+        }
     }
 
     FILE *out = fopen(argv[2], "w");

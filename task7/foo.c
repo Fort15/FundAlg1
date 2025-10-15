@@ -1,5 +1,19 @@
 #include "foo.h"
 #include <limits.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+
+Status same_files(const char *file1, const char *file2) {
+    struct stat st1, st2;
+    if (stat(file1, &st1) != 0) return STATUS_OK;    
+    if (stat(file2, &st2) != 0) return STATUS_OK;    
+    
+    if ((st1.st_dev == st2.st_dev) && (st1.st_ino == st2.st_ino)) {
+        return STATUS_SAME_FILES;
+    }
+    return STATUS_OK;
+}
 
 Status str_to_ll(const char* stroka, int base, long long* chislo) {
     const char* p = stroka;
