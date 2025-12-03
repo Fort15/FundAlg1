@@ -4,12 +4,56 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
+#ifdef _WIN32  
+    #include <windows.h>
+#else
+    #include <unistd.h>
+    #include <sys/stat.h>
+    #include <sys/types.h>
+#endif
 
 
 Status same_files(const char *file1, const char *file2) {
+#ifdef _WIN32  
+    BY_HANDLE_FILE_INFORMATION info1, info2;  
+    HANDLE hFile1 = CreateFile(file1,   
+                            GENERIC_READ,   
+                            FILE_SHARE_READ,   
+                            NULL,   
+                            OPEN_EXISTING,   
+                            FILE_ATTRIBUTE_NORMAL,   
+                            NULL);  
+    
+    HANDLE hFile2 = CreateFile(file2,   
+                            GENERIC_READ,   
+                            FILE_SHARE_READ,   
+                            NULL,   
+                            OPEN_EXISTING,   
+                            FILE_ATTRIBUTE_NORMAL,   
+                            NULL);  
+    
+   if (hFile1 == INVALID_HANDLE_VALUE || hFile2 == INVALID_HANDLE_VALUE) {
+        if (hFile1 != INVALID_HANDLE_VALUE) CloseHandle(hFile1);
+        if (hFile2 != INVALID_HANDLE_VALUE) CloseHandle(hFile2);
+        return STATUS_FILE_ERROR;
+    }
+    
+    BOOL success1 = GetFileInformationByHandle(hFile1, &info1);  
+    BOOL success2 = GetFileInformationByHandle(hFile2, &info2);  
+    CloseHandle(hFile1);  
+    CloseHandle(hFile2);  
+    
+    if (!success1 || !success2) {
+        return STATUS_FILE_ERROR;
+    }
+    
+    if (info1.dwVolumeSerialNumber == info2.dwVolumeSerialNumber &&  
+        info1.nFileIndexHigh == info2.nFileIndexHigh &&  
+        info1.nFileIndexLow == info2.nFileIndexLow) {
+        return STATUS_SAME_FILES;
+    }
+    return STATUS_OK;
+#else  
     struct stat st1, st2;
     if (stat(file1, &st1) != 0) return STATUS_OK;    
     if (stat(file2, &st2) != 0) return STATUS_OK;    
@@ -18,8 +62,9 @@ Status same_files(const char *file1, const char *file2) {
         return STATUS_SAME_FILES;
     }
     return STATUS_OK;
+#endif  
+    return STATUS_FILE_ERROR;  
 }
-
 
 Status validate_flag(const char *stroka, char *flag, int *have_n) {
     if (!stroka || !flag || !have_n) return STATUS_INVALID_FLAG;

@@ -10,6 +10,7 @@ typedef enum {
     STATUS_INVALID_FILE,
     STATUS_MEMORY_FAILED,
     STATUS_SAME_FILES,
+    STATUS_FILE_ERROR,
 } Status;
 
 

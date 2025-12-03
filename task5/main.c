@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
     } else {
         if (argc != 3) {
             printf("Неверное число аргументов\n");
-            return STATUS_INVALID_ARGC;
+            return 0;
         }
         status = out_file_path(input_path, &temp_path);
         if (status != STATUS_OK) {

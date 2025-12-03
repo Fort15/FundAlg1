@@ -9,6 +9,7 @@ typedef enum {
     STATUS_INVALID_BASE,
     STATUS_INVALID_NUMBER,
     STATUS_TOO_BIG_LL,
+    STATUS_FILE_ERROR,
 } Status;
 
 
